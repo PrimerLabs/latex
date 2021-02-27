@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:18.04
 MAINTAINER Siddharth Kanungo <admin@primerlabs.io>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -16,6 +16,8 @@ RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz; \
     rm -r /install-tl-unx; \
 	rm install-tl-unx.tar.gz
 
+
+
 ENV PATH="/usr/local/texlive/2020/bin/x86_64-linux:${PATH}"
 
 ENV HOME /data
@@ -29,12 +31,15 @@ RUN apt-get update && \
         add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update -y
 
-RUN apt-get install -y build-essential python3.6 python3.6-dev python3-pip python3.6-venv && \
+RUN apt-get install -y build-essential python3.8 python3.8-dev python3-pip python3.8-venv && \
         apt-get install -y git
 
+RUN ln -s /usr/bin/pip3 /usr/bin/pip
+RUN ln -s /usr/bin/python3.8 /usr/bin/python
+
 # update pip
-RUN python3.6 -m pip install pip --upgrade && \
-        python3.6 -m pip install wheel
+RUN python3.8 -m pip install pip --upgrade && \
+        python3.8 -m pip install wheel
 
 # Add Nginx
 RUN apt-get update &&  apt-get install -y --no-install-recommends \
